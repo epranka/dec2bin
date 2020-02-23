@@ -22,7 +22,7 @@ The live converter you can find by pressing the following link [dec2bin.now.sh](
 
 It's created using the React Create App (CRA) boilerplate.
 
-The inverted version of the converter **(bin2dev)** you can find there [bin2dec.now.sh](https://bin2dec.now.sh).
+The inverted version of the converter **(bin2dec)** you can find there [bin2dec.now.sh](https://bin2dec.now.sh).
 
 ![dec2bin landing page animation](https://dec2bin.now.sh/dec2bin.gif)
 

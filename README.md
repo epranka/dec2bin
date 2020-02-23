@@ -18,20 +18,76 @@
 
 <br />
 
-The live converter you can find by pressing the following link [bin2dev.now.sh](https://bin2dev.now.sh).
+The live converter you can find by pressing the following link [dec2bin.now.sh](https://dec2bin.now.sh).
 
 It's created using the React Create App (CRA) boilerplate.
 
-The inverted version of the converter **(bin2dev)** you can find there [bin2dev.now.sh](https://bin2dev.now.sh).
+The inverted version of the converter **(bin2dev)** you can find there [bin2dec.now.sh](https://bin2dec.now.sh).
 
-![dec2bin landing page animation](https://bin2dec.now.sh/bin2dec.gif)
+![dec2bin landing page animation](https://dec2bin.now.sh/dec2bin.gif)
 
 <br />
 
 ### The main _App_ component
 
 ```jsx
+import React, { useEffect, useState } from "react";
+import "./App.css";
 
+function App() {
+  const [decimalIsValid, setDecimalIsValid] = useState(true);
+  const [binaryValue, setBinaryValue] = useState("");
+  const [decimalValue, setDecimalValue] = useState("");
+
+  const formatValue = value => {
+    return value.replace(/\s+/g, "");
+  };
+
+  const handleDecimalValueChange = e => {
+    let value = String(e.target.value);
+    if (!value) {
+      setDecimalValue("");
+      setDecimalIsValid(true);
+    } else {
+      setDecimalIsValid(/^([0-9]+)$/.test(value));
+      setDecimalValue(formatValue(value));
+    }
+  };
+
+  const calculateBinary = decimalNumber => {
+    return decimalNumber
+      .toString(2)
+      .replace(/(\d{4})/g, "$1 ")
+      .trim();
+  };
+
+  useEffect(() => {
+    if (decimalIsValid && decimalValue) {
+      const decimalNumber = parseInt(decimalValue.replace(/[^0-9]/g, ""));
+      const binaryValue = calculateBinary(decimalNumber);
+      setBinaryValue(binaryValue);
+    } else {
+      setBinaryValue("");
+    }
+  }, [decimalValue, decimalIsValid]);
+
+  return (
+    <div id="dec2bin">
+      <h1 id="header">Dec2Bin</h1>
+      <input
+        id="decimal"
+        className={decimalIsValid ? "" : "invalid"}
+        type="text"
+        placeholder="1234"
+        value={decimalValue}
+        onChange={handleDecimalValueChange}
+      />
+      <div id="binary">{binaryValue}</div>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 <br />
@@ -39,7 +95,45 @@ The inverted version of the converter **(bin2dev)** you can find there [bin2dev.
 ### The main _App_ styles
 
 ```css
+#dec2bin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+#header {
+  font-size: 42px;
+}
+
+#decimal {
+  width: 100%;
+  display: block;
+  max-width: 350px;
+  margin: 0 20px;
+  font-size: 42px;
+  text-align: center;
+  background: transparent;
+  color: white;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid white;
+  margin-bottom: 30px;
+}
+
+#decimal.invalid {
+  color: #943838;
+}
+
+#binary {
+  font-size: 64px;
+  height: 100px;
+}
 ```
 
 <br />
@@ -47,5 +141,25 @@ The inverted version of the converter **(bin2dev)** you can find there [bin2dev.
 ### The global styles
 
 ```css
+body {
+  margin: 0;
+  font-family: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background: #222222;
+  color: white;
+}
 ```

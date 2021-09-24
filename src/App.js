@@ -40,10 +40,11 @@ function App() {
 
   return (
     <div id="dec2bin">
+      <a id="switch" href="https://bin2dec.now.sh" title="Switch to Bin2Dec">
+        Bin2Dec
+      </a>
       <h1 id="header">
-        <a href="https://bin2dec.now.sh" title="Switch to Bin2Dec">
-          Dec2Bin
-        </a>
+        Dec2Bin
       </h1>
       <input
         id="decimal"
